@@ -16,35 +16,35 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import entity.Detector;
-import entity.UbertoothDetection;
-import entity.UbertoothDetectionCollection;
+import entity.BluetoothDetection;
+import entity.BluetoothDetectionCollection;
 import repository.DetectorRepository;
-import repository.UbertoothDetectionRepository;
+import repository.BluetoothDetectionRepository;
 
 @RestController
-@RequestMapping("/ubertoothDetections")
-public class UbertoothDetectionsController {
+@RequestMapping("/bluetoothDetections")
+public class BluetoothDetectionsController {
 
 	@Autowired
-	private UbertoothDetectionRepository ubertoothDetectionRepository;
+	private BluetoothDetectionRepository bluetoothDetectionRepository;
 	
 	@Autowired
 	private DetectorRepository detectorRepository;
 
 	//@RequestMapping(method = RequestMethod.GET)
-	public Iterable<UbertoothDetection> getUbertooth() {
-		return ubertoothDetectionRepository.findAll();
+	public Iterable<BluetoothDetection> getUbertooth() {
+		return bluetoothDetectionRepository.findAll();
 	}
 
 	//@RequestMapping(value = "/{detectionId}", method = RequestMethod.GET)
-	UbertoothDetection readUbertoothDetection(@PathVariable Long detectionId) {
-		return this.ubertoothDetectionRepository.findOne(detectionId);
+	BluetoothDetection readUbertoothDetection(@PathVariable Long detectionId) {
+		return this.bluetoothDetectionRepository.findOne(detectionId);
 	}
 
 	//@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> add(@RequestBody UbertoothDetection input) {
-		UbertoothDetection result = ubertoothDetectionRepository
-				.save(new UbertoothDetection(input.getDetector(),input.getTime(), input.getLap(), input.getSignal()));
+	ResponseEntity<?> add(@RequestBody BluetoothDetection input) {
+		BluetoothDetection result = bluetoothDetectionRepository
+				.save(new BluetoothDetection(input.getDetector(),input.getTime(), input.getLap(), input.getSignal()));
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setLocation(
 				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri());
@@ -53,7 +53,7 @@ public class UbertoothDetectionsController {
 	}
 
 	@RequestMapping(path = "/collection", method = RequestMethod.POST)
-	ResponseEntity<?> addCollection(@RequestBody UbertoothDetectionCollection input) {
+	ResponseEntity<?> addCollection(@RequestBody BluetoothDetectionCollection input) {
 		long detectorId = input.getDetectorId();
 		Detector detector = detectorRepository.findOne(detectorId);
 		if(detector == null){
@@ -61,11 +61,11 @@ public class UbertoothDetectionsController {
 			httpHeaders.set("X-Status-Reason", String.format("Detector with id=%s not found",detectorId));
 			return new ResponseEntity<>(null, httpHeaders, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		List<UbertoothDetection> detections = input.getDetections();
+		List<BluetoothDetection> detections = input.getDetections();
 		List<Long> results = new ArrayList<Long>();
-		for (UbertoothDetection detection : detections) {			
-			UbertoothDetection result = ubertoothDetectionRepository
-					.save(new UbertoothDetection(detector, detection.getTime(), detection.getLap(), detection.getSignal()));
+		for (BluetoothDetection detection : detections) {			
+			BluetoothDetection result = bluetoothDetectionRepository
+					.save(new BluetoothDetection(detector, detection.getTime(), detection.getLap(), detection.getSignal()));
 			results.add(result.getId());
 		}
 		return new ResponseEntity<>(Arrays.toString(results.toArray()), null, HttpStatus.CREATED);

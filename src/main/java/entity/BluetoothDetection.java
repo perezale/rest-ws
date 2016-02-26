@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import app.FullDateSerializer;
 
 @Entity
-public class UbertoothDetection extends Detection {
+public class BluetoothDetection extends Detection {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +25,11 @@ public class UbertoothDetection extends Detection {
 	@ManyToOne
 	private Detector detector;
 
-	public UbertoothDetection() {
+	public BluetoothDetection() {
 
 	}
 
-	public UbertoothDetection(Detector detector, Date time, String lap, int signal) {
+	public BluetoothDetection(Detector detector, Date time, String lap, int signal) {
 		this.detector = detector;
 		this.time = time;
 		this.lap = lap;
@@ -86,7 +86,7 @@ public class UbertoothDetection extends Detection {
 
 	@Override
 	public String toString() {
-		return String.format("UbertoothDetection [id=%s, lap=%s, signal=%s]", id, lap, signal);
+		return String.format("BluetoothDetection [id=%s, lap=%s, signal=%s]", id, lap, signal);
 	}
 
 }

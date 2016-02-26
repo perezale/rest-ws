@@ -20,9 +20,9 @@ import org.springframework.web.filter.CorsFilter;
 import com.google.common.base.Predicates;
 
 import entity.Detector;
-import entity.UbertoothDetection;
+import entity.BluetoothDetection;
 import repository.DetectorRepository;
-import repository.UbertoothDetectionRepository;
+import repository.BluetoothDetectionRepository;
 import repository.VideoDetectionRepository;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -46,7 +46,7 @@ public class Application extends SpringBootServletInitializer {
 	@Bean
 	public CommandLineRunner demo(DetectorRepository detectorRepository,
 			VideoDetectionRepository videoDetectionRepository,
-			UbertoothDetectionRepository ubertoothDetectionRepository) {
+			BluetoothDetectionRepository ubertoothDetectionRepository) {
 		return (args) -> {
 			// save a couple of detectors
 			detectorRepository.save(new Detector(-37.320750f, -59.081938f));
@@ -68,20 +68,20 @@ public class Application extends SpringBootServletInitializer {
 			log.info("");
 
 			// save a couple of Ubertooth Detections
-			ubertoothDetectionRepository.save(new UbertoothDetection(detector, new Date(), "349e4a", -50));
-			ubertoothDetectionRepository.save(new UbertoothDetection(detector, new Date(), "349e4a", -55));
-			ubertoothDetectionRepository.save(new UbertoothDetection(detector, new Date(), "349e4a", -60));
+			ubertoothDetectionRepository.save(new BluetoothDetection(detector, new Date(), "349e4a", -50));
+			ubertoothDetectionRepository.save(new BluetoothDetection(detector, new Date(), "349e4a", -55));
+			ubertoothDetectionRepository.save(new BluetoothDetection(detector, new Date(), "349e4a", -60));
 
 			// fetch all detections
 			log.info("Ubertooth detections found with findAll():");
 			log.info("-------------------------------");
-			for (UbertoothDetection detection : ubertoothDetectionRepository.findAll()) {
+			for (BluetoothDetection detection : ubertoothDetectionRepository.findAll()) {
 				log.info(detection.toString());
 			}
 			log.info("");
 
 			// fetch an individual detectors by ID
-			UbertoothDetection udetection = ubertoothDetectionRepository.findOne(1L);
+			BluetoothDetection udetection = ubertoothDetectionRepository.findOne(1L);
 			log.info("Ubertooth detection found with findOne(1L):");
 			log.info("--------------------------------");
 			log.info(udetection.toString());
